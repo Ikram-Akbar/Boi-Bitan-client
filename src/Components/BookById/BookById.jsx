@@ -1,6 +1,7 @@
 import { useLoaderData, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import StatusMessage from "../StatusComponent/StatusMessage";
+import { addToStoredReadList, addToStoredWishList } from "../../Utility/loclStorage.js";
 
 const BookById = () => {
   const { bookId } = useParams();
@@ -14,6 +15,14 @@ const BookById = () => {
     setBook(found);
     setLoading(false);
   }, [bookId, data]);
+
+  const handleMarkAsRead = (id) => {
+    addToStoredReadList(id);
+  };
+
+  const handleAddToWishList = (id) => {
+    addToStoredWishList(id);
+  };
 
   if (loading) {
     return (
@@ -95,10 +104,16 @@ const BookById = () => {
         </div>
 
         <div className="mt-6 flex gap-4">
-          <button className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition">
+          <button
+            onClick={() => handleMarkAsRead(bookId)}
+            className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition"
+          >
             Read
           </button>
-          <button className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition">
+          <button
+            onClick={() => handleAddToWishList(bookId)}
+            className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition"
+          >
             Wishlist
           </button>
         </div>

@@ -8,7 +8,10 @@ const Nav = () => {
       <NavLink to="/" className="text-gray-700 hover:text-blue-600">
         Home
       </NavLink>
-      <NavLink to="archive" className="text-gray-700 hover:text-blue-600">
+      <NavLink
+        to="archived-books"
+        className="text-gray-700 hover:text-blue-600"
+      >
         Archive
       </NavLink>
       <NavLink to="booklist" className="text-gray-700 hover:text-blue-600">
@@ -23,8 +26,11 @@ const Nav = () => {
   return (
     <nav className="bg-white shadow-md px-4 py-3 md:px-8">
       <div className="flex items-center justify-between">
-        <div className="text-2xl font-bold text-blue-600">Boi Bitan</div>
-
+        <div>
+          <NavLink to="/" className="text-2xl font-bold text-blue-600">
+            Boi Bitan
+          </NavLink>
+        </div>
         <div className="md:hidden">
           <button onClick={toggleMenu}>
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -32,7 +38,7 @@ const Nav = () => {
         </div>
 
         <div className="hidden md:flex space-x-6 items-center">
-            {navItems}
+          {navItems}
           <div className="flex space-x-3">
             <button className="px-4 py-1 border border-blue-600 text-blue-600 rounded hover:bg-blue-50">
               Sign In

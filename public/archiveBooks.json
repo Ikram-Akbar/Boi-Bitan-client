@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "title": "Introduction to Algorithms",
+    "author": "Thomas H. Cormen",
+    "archivedDate": "2024-11-10",
+    "category": "Computer Science",
+    "description": "A comprehensive guide to algorithms and data structures."
+  },
+  {
+    "id": 2,
+    "title": "Clean Code",
+    "author": "Robert C. Martin",
+    "archivedDate": "2023-08-22",
+    "category": "Software Engineering",
+    "description": "A handbook of agile software craftsmanship."
+  },
+  {
+    "id": 3,
+    "title": "1984",
+    "author": "George Orwell",
+    "archivedDate": "2022-02-14",
+    "category": "Dystopian Fiction",
+    "description": "A novel that explores the dangers of totalitarianism."
+  },
+  {
+    "id": 4,
+    "title": "The Pragmatic Programmer",
+    "author": "Andy Hunt and Dave Thomas",
+    "archivedDate": "2024-04-01",
+    "category": "Software Development",
+    "description": "Tips and techniques for effective programming practices."
+  },
+  {
+    "id": 5,
+    "title": "The Art of War",
+    "author": "Sun Tzu",
+    "archivedDate": "2023-12-30",
+    "category": "Strategy",
+    "description": "An ancient Chinese military treatise."
+  }
+]
