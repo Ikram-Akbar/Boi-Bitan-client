@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const BookCard = ({ book }) => {
   return (
-    <Link to={`/book/${book.bookId}`} className="max-w-sm rounded-2xl overflow-hidden shadow-md bg-base-100 hover:shadow-lg transition-shadow duration-300 p-6 ">
+    <Link to={`/book/${book._id}`} className="max-w-sm rounded-2xl overflow-hidden shadow-md bg-base-100 hover:shadow-lg transition-shadow duration-300 p-6 ">
       <figure className="bg-gray-100 py-8 rounded-2xl">
         <img
           src={book.image}

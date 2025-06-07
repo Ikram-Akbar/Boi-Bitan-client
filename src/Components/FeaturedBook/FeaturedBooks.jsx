@@ -7,9 +7,10 @@ const FeaturedBooks = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/booksData.json")
+    fetch("http://localhost:5000/api/books")
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         setBooks(data);
         setLoading(false);
       })
@@ -33,7 +34,7 @@ const FeaturedBooks = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {books.map((book) => (
-          <BookCard key={book.bookId} book={book} />
+          <BookCard key={book._id} book={book} />
         ))}
       </div>
     </div>

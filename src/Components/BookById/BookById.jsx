@@ -1,26 +1,41 @@
-import { useLoaderData, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import StatusMessage from "../StatusComponent/StatusMessage";
-import { addToStoredReadList, addToStoredWishList } from "../../Utility/loclStorage.js";
+import {
+  addToStoredReadList,
+  addToStoredWishList,
+} from "../../Utility/loclStorage.js";
 
 const BookById = () => {
-  const { bookId } = useParams();
-  const data = useLoaderData();
+  const { id } = useParams(); // changed from _id to id
+  const [book, setBook] = useState(null); // changed from [] to null
   const [loading, setLoading] = useState(true);
-  const [book, setBook] = useState(null);
 
   useEffect(() => {
-    const id = parseInt(bookId);
-    const found = data.find((d) => d.bookId === id);
-    setBook(found);
-    setLoading(false);
-  }, [bookId, data]);
+    const fetchBookById = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/api/books/${id}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch book details");
+        }
+        const data = await response.json();
+        setBook(data);
+      } catch (error) {
+        console.error("Error fetching book:", error);
+        setBook(null); // Ensure 404 shows
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const handleMarkAsRead = (id) => {
+    fetchBookById();
+  }, [id]);
+
+  const handleMarkAsRead = () => {
     addToStoredReadList(id);
   };
 
-  const handleAddToWishList = (id) => {
+  const handleAddToWishList = () => {
     addToStoredWishList(id);
   };
 
@@ -33,7 +48,7 @@ const BookById = () => {
     );
   }
 
-  if (!book) {
+  if (!book || Object.keys(book).length === 0) {
     return (
       <StatusMessage
         statusCode="404"
@@ -56,7 +71,7 @@ const BookById = () => {
         />
       </div>
 
-      <div className="border p-4 rounded-2xl border-dashed ">
+      <div className="border p-4 rounded-2xl border-dashed">
         <h1 className="text-3xl font-bold mb-2">{book.bookName}</h1>
         <p className="text-lg text-gray-700 mb-1">
           <span className="font-semibold">By :</span> {book.author}
@@ -105,13 +120,13 @@ const BookById = () => {
 
         <div className="mt-6 flex gap-4">
           <button
-            onClick={() => handleMarkAsRead(bookId)}
+            onClick={handleMarkAsRead}
             className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition"
           >
             Read
           </button>
           <button
-            onClick={() => handleAddToWishList(bookId)}
+            onClick={handleAddToWishList}
             className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition"
           >
             Wishlist
