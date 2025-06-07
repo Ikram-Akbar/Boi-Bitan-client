@@ -1,2 +1,8 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 400; /* Adjust between 300–700 */
+}
+ 

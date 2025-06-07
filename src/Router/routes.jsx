@@ -51,7 +51,7 @@ export const router = createBrowserRouter([
         element: <AddBook />
       },
       {
-        path: "update-book",
+        path: "updatebook/:id",
         element: <Update />
       },
       {
