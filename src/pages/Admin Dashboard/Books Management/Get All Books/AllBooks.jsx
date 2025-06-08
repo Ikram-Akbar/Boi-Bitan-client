@@ -23,7 +23,9 @@ const AllBooks = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    const confirm = window.confirm("Are you sure you want to delete this book?");
+    const confirm = window.confirm(
+      "Are you sure you want to delete this book?"
+    );
     if (!confirm) return;
 
     try {
@@ -41,15 +43,8 @@ const AllBooks = () => {
     }
   };
 
-  const handleEdit = (id) => {
-    // Redirect or open modal – customize this
-    alert(`Navigate to edit page for book ID: ${id}`);
-    window.location.href = `/admin/updatebook/${id}`;
-    
-  };
-
   if (loading) {
-    return <StatusMessage type="loading"/>
+    return <StatusMessage type="loading" />;
   }
 
   return (
@@ -57,7 +52,11 @@ const AllBooks = () => {
       <h1 className="text-3xl font-bold mb-6 text-center">All Books</h1>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {books.map((book) => (
-         <AllBooksCard key={book._id} book={book} handleDelete={handleDelete} handleEdit={handleEdit} />
+          <AllBooksCard
+            key={book._id}
+            book={book}
+            handleDelete={handleDelete}
+          />
         ))}
       </div>
     </div>

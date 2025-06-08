@@ -14,7 +14,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
-    errorElement: <Error />, 
+    errorElement: <Error />,
     children: [
       {
         index: true,
@@ -27,7 +27,6 @@ export const router = createBrowserRouter([
       {
         path: "book/:id",
         element: <BookById />,
-        
       },
       {
         path: "archived-books",
@@ -41,23 +40,25 @@ export const router = createBrowserRouter([
     element: <Dashboard />,
     errorElement: <Error />,
     children: [
-     
       {
         path: "all-books",
-        element: <AllBooks />
+        element: <AllBooks />,
       },
       {
         path: "add-book",
-        element: <AddBook />
+        element: <AddBook />,
       },
       {
         path: "updatebook/:id",
-        element: <Update />
+        element: <Update />,
+        loader: ({ params }) => {
+          return fetch(`http://localhost:5000/api/books/${params.id}`); // why need return here?
+        },
       },
       {
         path: "delete-book",
-        element: <DeleteBook />
+        element: <DeleteBook />,
       },
-    ]
-  }
+    ],
+  },
 ]);
