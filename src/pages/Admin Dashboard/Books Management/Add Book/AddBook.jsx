@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { BookPlus, X } from "lucide-react";
+import { addBook } from "../../../../api/api";
 
 const AddBook = () => {
+
+  //todo : Make a custom hook for form handling
   const [formData, setFormData] = useState({
     bookName: "",
     author: "",
@@ -41,24 +44,18 @@ const AddBook = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log("Submitted book:", formData);
-    // Here you would typically send the formData to your backend API :
-    fetch("http://localhost:5000/api/books", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.insertedId) {
+   
+    addBook(formData)
+      .then((res) => {
+        if (res.data.insertedId) {
           alert("Book added successfully!");
         }
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.error("Error adding book:", error);
+        alert("Failed to add book. Please try again.");
       });
+
     // Reset form
     setFormData({
       bookName: "",

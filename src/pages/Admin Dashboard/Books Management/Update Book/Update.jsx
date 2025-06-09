@@ -1,42 +1,42 @@
 import { useState } from "react";
-import {
-  Navigate,
-  useLoaderData,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { BookPlus, X } from "lucide-react";
+import { getBookById } from "../../../../api/api";
+import { useEffect } from "react";
 
 const Update = () => {
-  const { id } = useParams();
-  const bookData = useLoaderData();
   const navigate = useNavigate();
-
-  const {
-    author,
-    bookName,
-    category,
-    image,
-    publisher,
-    rating,
-    review,
-    tags = [],
-    totalPages,
-    yearOfPublishing,
-  } = bookData;
-
+  const { id } = useParams();
   const [formData, setFormData] = useState({
-    bookName,
-    author,
-    category,
-    image,
-    publisher,
-    rating,
-    review,
-    tags,
-    totalPages,
-    yearOfPublishing,
+    bookName: "",
+    author: "",
+    category: "",
+    image: "",
+    publisher: "",
+    rating: 0,
+    review: "",
+    tags: [],
+    totalPages: 0,
+    yearOfPublishing: new Date().getFullYear(),
   });
+
+  //load data from api :
+  useEffect(() => {
+    getBookById(id)
+      .then((response) => {
+        if (response.data) {
+          setFormData(response.data);
+        } else {
+          alert("Book not found.");
+          navigate("/admin/all-books");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching book data:", error);
+        alert("Failed to fetch book data. Please try again.");
+        navigate("/admin/all-books");
+      });
+  }, [id, navigate]);
 
   const [tagInput, setTagInput] = useState("");
 
@@ -72,24 +72,7 @@ const Update = () => {
     e.preventDefault();
     console.log("Updated Book Data:", formData);
 
-    fetch(`http://localhost:5000/api/books/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.modifiedCount > 0) {
-          alert("Book updated successfully!");
-          navigate("/admin/all-books");
-        } else {
-          alert("No changes made or book not found.");
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating book:", error);
-        alert("Failed to update book. Please try again.");
-      });
+  
   };
 
   return (

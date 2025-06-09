@@ -51,9 +51,7 @@ export const router = createBrowserRouter([
       {
         path: "updatebook/:id",
         element: <Update />,
-        loader: ({ params }) => {
-          return fetch(`http://localhost:5000/api/books/${params.id}`); // why need return here?
-        },
+       
       },
       {
         path: "delete-book",

@@ -1,25 +1,22 @@
 import { useEffect, useState } from "react";
 import StatusMessage from "../../../../Components/StatusComponent/StatusMessage";
 import AllBooksCard from "./AllBooksCard";
+import { getAllBooks } from "../../../../api/api";
 
 const AllBooks = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchBooks = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/books");
-        const data = await res.json();
-        setBooks(data);
-      } catch (error) {
-        console.error("Error fetching books:", error);
-      } finally {
+    getAllBooks()
+      .then((response) => {
+        setBooks(response.data);
         setLoading(false);
-      }
-    };
-
-    fetchBooks();
+      })
+      .catch((error) => {
+        console.error("Error fetching books:", error);
+        setLoading(false);
+      });
   }, []);
 
   const handleDelete = async (id) => {
@@ -29,7 +26,7 @@ const AllBooks = () => {
     if (!confirm) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/books/${id}`, {
+      const res = await fetch(`http://localhost:4800/api/books/${id}`, {
         method: "DELETE",
       });
 

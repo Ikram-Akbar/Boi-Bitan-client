@@ -5,30 +5,25 @@ import {
   addToStoredReadList,
   addToStoredWishList,
 } from "../../Utility/loclStorage.js";
+import { getBookById } from "../../api/api.js";
 
 const BookById = () => {
-  const { id } = useParams(); // changed from _id to id
-  const [book, setBook] = useState(null); // changed from [] to null
+  const { id } = useParams(); 
+  const [book, setBook] = useState(null); 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchBookById = async () => {
-      try {
-        const response = await fetch(`http://localhost:5000/api/books/${id}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch book details");
-        }
-        const data = await response.json();
-        setBook(data);
-      } catch (error) {
-        console.error("Error fetching book:", error);
-        setBook(null); // Ensure 404 shows
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBookById();
+     getBookById(id)
+    .then((response) => {
+      setBook(response.data);
+    })
+    .catch((error) => {
+      console.error("Error fetching book:", error);
+      setBook(null);
+    })
+    .finally(() => {
+      setLoading(false);
+    });
   }, [id]);
 
   const handleMarkAsRead = () => {
